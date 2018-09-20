@@ -59,7 +59,7 @@ public class SlideshowViewController: UIViewController, UIPageViewControllerDele
         precondition(items.count > 0, "Cannot create an empty slideshow.")
         self.items = items
 
-        let pagingOptions: [String : Any] = [UIPageViewControllerOptionInterPageSpacingKey: CGFloat(24)]
+        let pagingOptions: [UIPageViewController.OptionsKey : Any] = [.interPageSpacing: CGFloat(24)]
         self.pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: pagingOptions)
 
         super.init(nibName: nil, bundle: nil)
@@ -119,13 +119,13 @@ public class SlideshowViewController: UIViewController, UIPageViewControllerDele
         pageController.delegate = self
         pageController.view.accessibilityIdentifier = "aura_slideshow.page_controller"
 
-        addChildViewController(pageController)
+        addChild(pageController)
         view.addSubview(pageController.view)
-        pageController.didMove(toParentViewController: self)
+        pageController.didMove(toParent: self)
 
-        addChildViewController(textContainer)
+        addChild(textContainer)
         view.addSubview(textContainer.view)
-        textContainer.didMove(toParentViewController: self)
+        textContainer.didMove(toParent: self)
 
         view.accessibilityElements = [pageController.view, textContainer.view]
     }
@@ -284,8 +284,8 @@ public class SlideshowViewController: UIViewController, UIPageViewControllerDele
         pageController.setViewControllers([nextViewController], direction: isForwardScroll ? .forward : .reverse, animated: true) { completed in
             if completed {
                 self.displayText(for: item)
-                UIAccessibilityPostNotification(UIAccessibilityPageScrolledNotification,
-                                                item.localizedValue)
+                UIAccessibility.post(notification: UIAccessibility.Notification.pageScrolled,
+                                     argument: item.localizedValue)
             }
         }
 

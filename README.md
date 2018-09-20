@@ -69,6 +69,8 @@ Make sure to read these guides before getting started:
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Contribution Guidelines](CONTRIBUTING.md)
 
+You will need Xcode 10 and Swift 4.2 to build the library.
+
 ## Author
 
 Written by Alexis Aubry. You can [find me on Twitter](https://twitter.com/_alexaubry).
